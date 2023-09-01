@@ -25,12 +25,14 @@
 
 // Macro definitions
 #define NEOPIXELPIN 6 
+#define NEOPIXELPIN2
 #define NUMPIXELS 2 
 #define UNUSED 0
 #define PIRPIN 2
 
 // Object creation
 Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
 
 // Function prototypes
 void toggleEyes(void);
@@ -60,9 +62,12 @@ void setup() {
 
   // Initialize NeoPixel object
   pixels.begin(); 
+  pixels2.begin();
 
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixels.setPixelColor(i, currentColor);
+  for (uint8_t i = 0; i < NUMPIXELS; i++) 
+    pixels2.setPixelColor(i, currentColor);
 
   // Starts timer to toggle eyes every 1s
   startVTimer(toggleEyes, 200, UNUSED);
@@ -78,12 +83,18 @@ void toggleEyes(void) {
   if (eyesOn) {
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
       pixels.setPixelColor(i, OFF);
+    for (uint8_t i = 0; i < NUMPIXELS; i++) 
+      pixels2.setPixelColor(i, OFF);
     pixels.show();
+    pixels2.show();
     eyesOn = false;
   } else {
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
       pixels.setPixelColor(i, currentColor);
+    for (uint8_t i = 0; i < NUMPIXELS; i++) 
+      pixels2.setPixelColor(i, currentColor);
     pixels.show();
+    pixels2.show();
     eyesOn = true;
   }
   // Restarts timer to toggle eyes again in 1s
@@ -97,6 +108,8 @@ ISR (INT0_vect) {
   currentColor = RED;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixels.setPixelColor(i, currentColor);
+  for (uint8_t i = 0; i < NUMPIXELS; i++) 
+    pixels2.setPixelColor(i, currentColor);
   // Stops any interrupts on the PIR sensor pin
   stopINT0Interrupt();
   // Starts timer to allow interrupt again
@@ -115,6 +128,8 @@ void resetColor(void) {
   currentColor = WHITE;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixels.setPixelColor(i, currentColor);
+  for (uint8_t i = 0; i < NUMPIXELS; i++) 
+    pixels2.setPixelColor(i, currentColor);
 }
 
 void allowINT0Interrupt(void) {
