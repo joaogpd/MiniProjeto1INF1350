@@ -1,3 +1,25 @@
+// Ard.Pin - 328.pin - Tabuleiro Pin -   Device
+// 00  RXD    PD0       USB               USB Cable
+// 01  TXD    PD1       USB               USB Cable
+// 02  INT0   PD2       PIR               PIR
+// 03~ INT1   PD3       DFPlayer-Busy     DFMini Busy (16)
+// 04         PD4       
+// 05~        PD5       
+// 06~        PD6       NanoPixel         NanoPixel(in) 
+// 07         PD7       
+// 08         PB0       
+// 09~        PB1       TX2               DFMini RX (2)+ Resistor 1k    
+// 10~        PB2       
+// 11~        PB3       
+// 12         PB4       
+// 13         PB5       
+// A0         PC0       
+// A1         PC1       
+// A2         PC2       
+// A3         PC3       
+// A4         PC4       
+// A5         PC5       
+
 #include <Adafruit_NeoPixel.h>
 #include "SchedulerVTimer.h"
 
@@ -15,6 +37,8 @@ void toggleEyes(void);
 void ISR_PIR(void);
 void allowPIRInterrupts(void);
 void resetColor(void);
+void allowINT0Interrupt(void);
+void stopINT0Interrupt(void);
 
 // Global variables
 volatile bool eyesOn = false;
@@ -32,7 +56,7 @@ void setup() {
   initSchedulerVTTimer();
 
   // Allows an interrupt to occur on the PIR sensor pin
-  attachInterrupt(digitalPinToInterrupt(PIRPIN), ISR_PIR, FALLING);
+  allowINT0Interrupt();
 
   // Initialize NeoPixel object
   pixels.begin(); 
@@ -41,7 +65,7 @@ void setup() {
     pixels.setPixelColor(i, currentColor);
 
   // Starts timer to toggle eyes every 1s
-  startVTimer(toggleEyes, 1000, UNUSED);
+  startVTimer(toggleEyes, 200, UNUSED);
 }
 
 void loop() {
@@ -63,17 +87,18 @@ void toggleEyes(void) {
     eyesOn = true;
   }
   // Restarts timer to toggle eyes again in 1s
-  startVTimer(toggleEyes, 1000, UNUSED);
+  startVTimer(toggleEyes, 200, UNUSED);
 }
 
 // Handles an ISR interrupt, turning eyes red
-void ISR_PIR(void) {
+// void ISR_PIR(void) {
+ISR (INT0_vect) {
   // Turns eyes red
   currentColor = RED;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixels.setPixelColor(i, currentColor);
   // Stops any interrupts on the PIR sensor pin
-  detachInterrupt(digitalPinToInterrupt(PIRPIN));
+  stopINT0Interrupt();
   // Starts timer to allow interrupt again
   startVTimer(allowPIRInterrupts, 1000, UNUSED);
   // Starts timer to reset eye color to white
@@ -82,7 +107,7 @@ void ISR_PIR(void) {
 
 // Resumes the interrupt handling on the PIR sensor pin
 void allowPIRInterrupts(void) {
-  attachInterrupt(digitalPinToInterrupt(PIRPIN), ISR_PIR, FALLING);
+  allowINT0Interrupt();
 }
 
 // Resets the eye color to white, on next toggleEyes timer expiry, color will change
@@ -90,5 +115,16 @@ void resetColor(void) {
   currentColor = WHITE;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixels.setPixelColor(i, currentColor);
+}
+
+void allowINT0Interrupt(void) {
+  // Setup interrupt on pin 2 (INT0)
+  EICRA |= (1 << ISC01) | (1 << ISC00);   // Trigger interrupt on rising
+  EIMSK |= (1 << INT0); 
+}
+
+void stopINT0Interrupt(void) {
+  // Stop interrupt on pin 2 (INT0)
+  EIMSK &= ~(1 << INT0);
 }
 
