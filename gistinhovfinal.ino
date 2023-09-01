@@ -32,7 +32,7 @@
 
 // Object creation
 Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels2(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
 
 // Function prototypes
 void toggleEyes(void);
