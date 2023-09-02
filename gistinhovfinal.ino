@@ -22,6 +22,7 @@
 
 #include <Adafruit_NeoPixel.h>
 #include "SchedulerVTimer.h"
+#include "DFRobotDFPlayerMini.h"
 
 // Macro definitions
 #define NEOPIXELPIN 6 
