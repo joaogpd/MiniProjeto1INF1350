@@ -42,6 +42,8 @@ void allowPIRInterrupts(void);
 void resetColor(void);
 void allowINT0Interrupt(void);
 void stopINT0Interrupt(void);
+void allowINT1Interrupt(void);
+void stopINT1Interrupt(void);
 
 // Global variables
 volatile bool eyesOn = false;
