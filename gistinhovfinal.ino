@@ -31,7 +31,8 @@
 #define PIRPIN 2
 #define RXPIN 4
 #define TXPIN 5
-#define NUMPIXELS 2 
+#define NUMPIXELS 2
+#define NUMSONGS 11
 #define UNUSED 0
 #define clearBit(reg, bit) (reg | ~(1 << bit))
 
@@ -42,8 +43,6 @@ SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
 
 // Function prototypes
 void toggleEyes(void);
-void ISR_PIR(void);
-void allowPIRInterrupts(void);
 void resetColor(void);
 void allowINT0Interrupt(void);
 void stopINT0Interrupt(void);
@@ -65,7 +64,6 @@ void setup() {
   dfMiniSerial.begin(9600);
   // Setup all tasks 
   setupTasks(vtimer, toggleEyes);
-  setupTasks(vtimer, allowPIRInterrupts);
   setupTasks(vtimer, resetColor);
   setupTasks(app, playNextSong);
   // Virtual timer module initialization
@@ -85,7 +83,7 @@ void setup() {
     pixelsLeft.setPixelColor(i, currentColor);
 
   // Post all app tasks
-  postTask(playNextSong, UNUSED);
+  postTask(app, playNextSong, UNUSED);
   // Starts timer to toggle eyes every 1s
   startVTimer(toggleEyes, 200, UNUSED);
 }
@@ -119,7 +117,6 @@ void toggleEyes(void) {
 }
 
 // Handles an ISR interrupt, turning eyes red
-// void ISR_PIR(void) {
 ISR (INT0_vect) {
   // Turns eyes red
   currentColor = RED;
@@ -129,15 +126,8 @@ ISR (INT0_vect) {
     pixelsLeft.setPixelColor(i, currentColor);
   // Stops any interrupts on the PIR sensor pin
   stopINT0Interrupt();
-  // Starts timer to allow interrupt again
-  startVTimer(allowPIRInterrupts, 1000, UNUSED);
-  // Starts timer to reset eye color to white
-  startVTimer(resetColor, 10000, UNUSED);
-}
-
-// Resumes the interrupt handling on the PIR sensor pin
-void allowPIRInterrupts(void) {
-  allowINT0Interrupt();
+  // PLays next song after turning eyes red on next loop pass
+  postTask(app, playNextSong, UNUSED);
 }
 
 // Resets the eye color to white. On next toggleEyes timer expiry, color will change
@@ -153,11 +143,22 @@ void resetColor(void) {
 void playNextSong(void) {
   dfMiniSerial.play(nextSong);
   nextSong++;
+  if (nextSong > NUMSONGS)
+    nextSong = 1;
   currentlyPlaying = true;
+  // Allows an interrupt to occur when the busy pin (pin 3) rises to HIGH after song ends
+  allowINT1Interrupt();
 }
 
+// Handles a busy pin interrupt (song over) and resets eye color
 ISR (INT1_vect) {
-  
+  currentlyPlaying = false;
+  // Resets eye color to white after song finishes
+  resetColor();
+  // Stops an interrupt from occuring on the busy pin (pin 3)
+  stopINT1Interrupt();
+  // Allows for PIR interrupts to occur
+  allowINT0Interrupt();
 }
 
 // Allows for INT0 (pin 2) interrupt to happen
@@ -172,18 +173,20 @@ void allowINT0Interrupt(void) {
 void allowINT1Interrupt(void) {
   // The rising edge of INT1 generates an interrupt request.
   EICRA |= (1 << ISC11) | (1 << ISC10);   
-  // External Interrupt Request 0 Enable
+  // External Interrupt Request 1 Enable
   EIMSK |= (1 << INT1); 
 }
 
 // Stops INT0 (pin 2) interrupt from happening
 void stopINT0Interrupt(void) {
+  // External Interrupt Request 1 Disable
   EIMSK &= ~(1 << INT0);
   // EIMSK = clearBit(EIMSK, INT0);
 }
 
 // Stops INT1 (pin 3) interrupt from happening
 void stopINT1Interrupt(void) {
+  // External Interrupt Request 1 Disable
   EIMSK &= ~(1 << INT1);
   // EIMSK = clearBit(EIMSK, INT1);
 }
