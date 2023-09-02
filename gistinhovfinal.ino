@@ -124,7 +124,7 @@ void allowPIRInterrupts(void) {
   allowINT0Interrupt();
 }
 
-// Resets the eye color to white, on next toggleEyes timer expiry, color will change
+// Resets the eye color to white. On next toggleEyes timer expiry, color will change
 void resetColor(void) {
   currentColor = WHITE;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
