@@ -8,7 +8,7 @@
 // 06~        PD6       NeoPixel          NeoPixel(in) 
 // 07         PD7       NeoPixel          NeoPixel(in)
 // 08         PB0       
-// 09~        PB1       TX2               DFMini RX (2)+ Resistor 1k    
+// 09~        PB1          
 // 10~        PB2       
 // 11~        PB3       
 // 12         PB4       
