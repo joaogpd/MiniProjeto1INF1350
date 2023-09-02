@@ -29,6 +29,7 @@
 #define NUMPIXELS 2 
 #define UNUSED 0
 #define PIRPIN 2
+#define clearBit(reg, bit) (reg | ~(1 << bit))
 
 // Object creation
 Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
@@ -54,7 +55,7 @@ void setup() {
   setupTasks(vtimer, toggleEyes);
   setupTasks(vtimer, allowPIRInterrupts);
   setupTasks(vtimer, resetColor);
-  // Initializion
+  // Virtual timer module initialization
   initSchedulerVTTimer();
 
   // Allows an interrupt to occur on the PIR sensor pin
@@ -132,14 +133,31 @@ void resetColor(void) {
     pixels2.setPixelColor(i, currentColor);
 }
 
+// Allows for INT0 (pin 2) interrupt to happen
 void allowINT0Interrupt(void) {
-  // Setup interrupt on pin 2 (INT0)
-  EICRA |= (1 << ISC01) | (1 << ISC00);   // Trigger interrupt on rising
+  // The rising edge of INT0 generates an interrupt request.
+  EICRA |= (1 << ISC01) | (1 << ISC00);   
+  // External Interrupt Request 0 Enable
   EIMSK |= (1 << INT0); 
 }
 
+// Allows for INT1 (pin 3) interrupt to happen
+void allowINT1Interrupt(void) {
+  // The rising edge of INT1 generates an interrupt request.
+  EICRA |= (1 << ISC11) | (1 << ISC10);   
+  // External Interrupt Request 0 Enable
+  EIMSK |= (1 << INT1); 
+}
+
+// Stops INT0 (pin 2) interrupt from happening
 void stopINT0Interrupt(void) {
-  // Stop interrupt on pin 2 (INT0)
   EIMSK &= ~(1 << INT0);
+  // EIMSK = clearBit(EIMSK, INT0);
+}
+
+// Stops INT1 (pin 3) interrupt from happening
+void stopINT1Interrupt(void) {
+  EIMSK &= ~(1 << INT1);
+  // EIMSK = clearBit(EIMSK, INT1);
 }
 
