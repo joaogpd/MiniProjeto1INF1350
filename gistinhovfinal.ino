@@ -5,8 +5,8 @@
 // 03~ INT1   PD3       DFPlayer-Busy     DFMini Busy (16)
 // 04         PD4       
 // 05~        PD5       
-// 06~        PD6       NanoPixel         NanoPixel(in) 
-// 07         PD7       
+// 06~        PD6       NeoPixel          NeoPixel(in) 
+// 07         PD7       NeoPixel          NeoPixel(in)
 // 08         PB0       
 // 09~        PB1       TX2               DFMini RX (2)+ Resistor 1k    
 // 10~        PB2       
@@ -25,15 +25,15 @@
 
 // Macro definitions
 #define NEOPIXELPIN 6 
-#define NEOPIXELPIN2
+#define NEOPIXELPIN2 7
 #define NUMPIXELS 2 
 #define UNUSED 0
 #define PIRPIN 2
 #define clearBit(reg, bit) (reg | ~(1 << bit))
 
 // Object creation
-Adafruit_NeoPixel pixels(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixels2(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixelsLeft(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
 
 // Function prototypes
 void toggleEyes(void);
@@ -45,9 +45,9 @@ void stopINT0Interrupt(void);
 
 // Global variables
 volatile bool eyesOn = false;
-volatile uint32_t WHITE = pixels.Color(255, 255, 255);
-volatile uint32_t RED = pixels.Color(255, 0, 0);
-volatile uint32_t OFF = pixels.Color(0, 0, 0);
+volatile uint32_t WHITE = pixelsRight.Color(255, 255, 255);
+volatile uint32_t RED = pixelsRight.Color(255, 0, 0);
+volatile uint32_t OFF = pixelsRight.Color(0, 0, 0);
 volatile uint32_t currentColor = WHITE;
 
 void setup() {
@@ -62,13 +62,13 @@ void setup() {
   allowINT0Interrupt();
 
   // Initialize NeoPixel object
-  pixels.begin(); 
-  pixels2.begin();
+  pixelsRight.begin(); 
+  pixelsLeft.begin();
 
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels.setPixelColor(i, currentColor);
+    pixelsRight.setPixelColor(i, currentColor);
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels2.setPixelColor(i, currentColor);
+    pixelsLeft.setPixelColor(i, currentColor);
 
   // Starts timer to toggle eyes every 1s
   startVTimer(toggleEyes, 200, UNUSED);
@@ -83,19 +83,19 @@ void loop() {
 void toggleEyes(void) {
   if (eyesOn) {
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixels.setPixelColor(i, OFF);
+      pixelsRight.setPixelColor(i, OFF);
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixels2.setPixelColor(i, OFF);
-    pixels.show();
-    pixels2.show();
+      pixelsLeft.setPixelColor(i, OFF);
+    pixelsRight.show();
+    pixelsLeft.show();
     eyesOn = false;
   } else {
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixels.setPixelColor(i, currentColor);
+      pixelsRight.setPixelColor(i, currentColor);
     for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixels2.setPixelColor(i, currentColor);
-    pixels.show();
-    pixels2.show();
+      pixelsLeft.setPixelColor(i, currentColor);
+    pixelsRight.show();
+    pixelsLeft.show();
     eyesOn = true;
   }
   // Restarts timer to toggle eyes again in 1s
@@ -108,9 +108,9 @@ ISR (INT0_vect) {
   // Turns eyes red
   currentColor = RED;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels.setPixelColor(i, currentColor);
+    pixelsRight.setPixelColor(i, currentColor);
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels2.setPixelColor(i, currentColor);
+    pixelsLeft.setPixelColor(i, currentColor);
   // Stops any interrupts on the PIR sensor pin
   stopINT0Interrupt();
   // Starts timer to allow interrupt again
@@ -128,9 +128,9 @@ void allowPIRInterrupts(void) {
 void resetColor(void) {
   currentColor = WHITE;
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels.setPixelColor(i, currentColor);
+    pixelsRight.setPixelColor(i, currentColor);
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixels2.setPixelColor(i, currentColor);
+    pixelsLeft.setPixelColor(i, currentColor);
 }
 
 // Allows for INT0 (pin 2) interrupt to happen
