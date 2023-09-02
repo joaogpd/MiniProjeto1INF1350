@@ -21,20 +21,24 @@
 // A5         PC5       
 
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
 #include "SchedulerVTimer.h"
 #include "DFRobotDFPlayerMini.h"
 
 // Macro definitions
-#define NEOPIXELPIN 6 
-#define NEOPIXELPIN2 7
+#define NEOPIXELPINRIGHT 6 
+#define NEOPIXELPINLEFT 7
+#define PIRPIN 2
+#define RXPIN 4
+#define TXPIN 5
 #define NUMPIXELS 2 
 #define UNUSED 0
-#define PIRPIN 2
 #define clearBit(reg, bit) (reg | ~(1 << bit))
 
 // Object creation
-Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel pixelsLeft(NUMPIXELS, NEOPIXELPIN2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixelsLeft(NUMPIXELS, NEOPIXELPINLEFT, NEO_GRB + NEO_KHZ800);
+SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
 
 // Function prototypes
 void toggleEyes(void);
@@ -45,6 +49,7 @@ void allowINT0Interrupt(void);
 void stopINT0Interrupt(void);
 void allowINT1Interrupt(void);
 void stopINT1Interrupt(void);
+void playNextSong(void);
 
 // Global variables
 volatile bool eyesOn = false;
@@ -52,12 +57,17 @@ volatile uint32_t WHITE = pixelsRight.Color(255, 255, 255);
 volatile uint32_t RED = pixelsRight.Color(255, 0, 0);
 volatile uint32_t OFF = pixelsRight.Color(0, 0, 0);
 volatile uint32_t currentColor = WHITE;
+volatile uint8_t nextSong = 1;
+volatile bool currentlyPlaying = false;
 
 void setup() {
+  // Start Serial
+  dfMiniSerial.begin(9600);
   // Setup all tasks 
   setupTasks(vtimer, toggleEyes);
   setupTasks(vtimer, allowPIRInterrupts);
   setupTasks(vtimer, resetColor);
+  setupTasks(app, playNextSong);
   // Virtual timer module initialization
   initSchedulerVTTimer();
 
@@ -68,11 +78,14 @@ void setup() {
   pixelsRight.begin(); 
   pixelsLeft.begin();
 
+  // Set NeoPixel initial colors
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixelsRight.setPixelColor(i, currentColor);
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixelsLeft.setPixelColor(i, currentColor);
 
+  // Post all app tasks
+  postTask(playNextSong, UNUSED);
   // Starts timer to toggle eyes every 1s
   startVTimer(toggleEyes, 200, UNUSED);
 }
@@ -134,6 +147,17 @@ void resetColor(void) {
     pixelsRight.setPixelColor(i, currentColor);
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixelsLeft.setPixelColor(i, currentColor);
+}
+
+// Plays next song on DF Mini Player, sets next song to be played and changes flag to show it is currently playing
+void playNextSong(void) {
+  dfMiniSerial.play(nextSong);
+  nextSong++;
+  currentlyPlaying = true;
+}
+
+ISR (INT1_vect) {
+  
 }
 
 // Allows for INT0 (pin 2) interrupt to happen
