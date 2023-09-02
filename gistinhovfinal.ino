@@ -34,7 +34,7 @@
 #define NUMPIXELS 2
 #define NUMSONGS 11
 #define UNUSED 0
-#define clearBit(reg, bit) (reg | ~(1 << bit))
+#define clearBit(reg, bit) (reg &= ~(1 << bit))
 
 // Object creation
 Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
