@@ -1,10 +1,10 @@
-// Ard.Pin - 328.pin - Tabuleiro Pin -   Device
+// Ard.Pin - 328.pin - Device Pin    -   Device
 // 00  RXD    PD0       USB               USB Cable
 // 01  TXD    PD1       USB               USB Cable
 // 02  INT0   PD2       PIR               PIR
 // 03~ INT1   PD3       DFPlayer-Busy     DFMini Busy (16)
-// 04         PD4       
-// 05~        PD5       
+// 04         PD4       RX                DFMini TX
+// 05~        PD5       TX                DFMini RX
 // 06~        PD6       NeoPixel          NeoPixel(in) 
 // 07         PD7       NeoPixel          NeoPixel(in)
 // 08         PB0       
