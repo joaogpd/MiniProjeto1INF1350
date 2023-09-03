@@ -52,7 +52,6 @@ void setup() {
   dfMiniSerial.begin(9600);
   // Setup all tasks 
   setupTasks(vtimer, toggleEyes);
-  setupTasks(vtimer, resetColor);
   setupTasks(app, playNextSong);
   // Virtual timer module initialization
   initSchedulerVTTimer();
