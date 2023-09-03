@@ -31,10 +31,15 @@
 #define PIRPIN 2
 #define RXPIN 4
 #define TXPIN 5
+#define PIN2 0
+#define PIN3 1
 #define NUMPIXELS 2
 #define NUMSONGS 11
 #define UNUSED 0
 #define clearBit(reg, bit) (reg &= ~(1 << bit))
+#define ISCx1(x) ISC ## x ## 1
+#define ISCx0(x) ISC ## x ## 0
+#define INTx(x) INT ## x
 
 // Object creation
 Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
@@ -44,10 +49,8 @@ SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
 // Function prototypes
 void toggleEyes(void);
 void resetColor(void);
-void allowINT0Interrupt(void);
-void stopINT0Interrupt(void);
-void allowINT1Interrupt(void);
-void stopINT1Interrupt(void);
+void allowPinInterrupt(uint8_t source);
+void stopPinInterrupt(uint8_t source);
 void playNextSong(void);
 
 // Global variables
@@ -70,7 +73,7 @@ void setup() {
   initSchedulerVTTimer();
 
   // Allows an interrupt to occur on the PIR sensor pin
-  allowINT0Interrupt();
+  allowPinInterrupt(PIN2);
 
   // Initialize NeoPixel object
   pixelsRight.begin(); 
@@ -89,7 +92,7 @@ void setup() {
 }
 
 void loop() {
-  // Look for tasks to execute
+  // Looks for tasks to execute
   procTasks();
 }
 
@@ -125,7 +128,7 @@ ISR (INT0_vect) {
   for (uint8_t i = 0; i < NUMPIXELS; i++) 
     pixelsLeft.setPixelColor(i, currentColor);
   // Stops any interrupts on the PIR sensor pin
-  stopINT0Interrupt();
+  stopPinInterrupt(PIN2);
   // PLays next song after turning eyes red on next loop pass
   postTask(app, playNextSong, UNUSED);
 }
@@ -147,7 +150,7 @@ void playNextSong(void) {
     nextSong = 1;
   currentlyPlaying = true;
   // Allows an interrupt to occur when the busy pin (pin 3) rises to HIGH after song ends
-  allowINT1Interrupt();
+  allowPinInterrupt(PIN3);
 }
 
 // Handles a busy pin interrupt (song over) and resets eye color
@@ -156,38 +159,19 @@ ISR (INT1_vect) {
   // Resets eye color to white after song finishes
   resetColor();
   // Stops an interrupt from occuring on the busy pin (pin 3)
-  stopINT1Interrupt();
+  stopPinInterrupt(PIN3);
   // Allows for PIR interrupts to occur
-  allowINT0Interrupt();
+  allowPinInterrupt(PIN2);
 }
 
-// Allows for INT0 (pin 2) interrupt to happen
-void allowINT0Interrupt(void) {
-  // The rising edge of INT0 generates an interrupt request.
-  EICRA |= (1 << ISC01) | (1 << ISC00);   
-  // External Interrupt Request 0 Enable
-  EIMSK |= (1 << INT0); 
+// Allow for INT0 or INT1 interrupts to happen
+void allowPinInterrupt(uint8_t source) {
+  EICRA |= (1 << ISCx1(source)) | (1 << ISCx0(source));
+  EIMSK |= (1 << INTx(source));
 }
 
-// Allows for INT1 (pin 3) interrupt to happen
-void allowINT1Interrupt(void) {
-  // The rising edge of INT1 generates an interrupt request.
-  EICRA |= (1 << ISC11) | (1 << ISC10);   
-  // External Interrupt Request 1 Enable
-  EIMSK |= (1 << INT1); 
-}
-
-// Stops INT0 (pin 2) interrupt from happening
-void stopINT0Interrupt(void) {
-  // External Interrupt Request 1 Disable
-  EIMSK &= ~(1 << INT0);
-  // EIMSK = clearBit(EIMSK, INT0);
-}
-
-// Stops INT1 (pin 3) interrupt from happening
-void stopINT1Interrupt(void) {
-  // External Interrupt Request 1 Disable
-  EIMSK &= ~(1 << INT1);
-  // EIMSK = clearBit(EIMSK, INT1);
+// Stops INT0 or INT1 from happening
+void stopPinInterupt(uint8_t source) {
+  EIMSK = clearBit(EIMSK, INTx(source));
 }
 
