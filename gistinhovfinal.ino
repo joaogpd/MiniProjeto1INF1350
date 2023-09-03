@@ -33,7 +33,7 @@
 #define TXPIN 5
 #define PIN2 0
 #define PIN3 1
-#define NUMPIXELS 2
+#define NUMPIXELS 1
 #define NUMSONGS 11
 #define UNUSED 0
 #define clearBit(reg, bit) (reg &= ~(1 << bit))
@@ -80,10 +80,8 @@ void setup() {
   pixelsLeft.begin();
 
   // Set NeoPixel initial colors
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsRight.setPixelColor(i, currentColor);
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsLeft.setPixelColor(i, currentColor);
+  pixelsRight.setPixelColor(0, currentColor);
+  pixelsLeft.setPixelColor(0, currentColor);
 
   // Post all app tasks
   postTask(app, playNextSong, UNUSED);
@@ -98,19 +96,15 @@ void loop() {
 
 // Toggles the NeoPixel leds, using a global variable to check current state
 void toggleEyes(void) {
-  if (eyesOn) {
-    for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixelsRight.setPixelColor(i, OFF);
-    for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixelsLeft.setPixelColor(i, OFF);
+  if (eyesOn) { 
+    pixelsRight.setPixelColor(0, OFF);
+    pixelsLeft.setPixelColor(0, OFF);
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = false;
   } else {
-    for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixelsRight.setPixelColor(i, currentColor);
-    for (uint8_t i = 0; i < NUMPIXELS; i++) 
-      pixelsLeft.setPixelColor(i, currentColor);
+    pixelsRight.setPixelColor(0, currentColor);
+    pixelsLeft.setPixelColor(0, currentColor);
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = true;
@@ -123,23 +117,19 @@ void toggleEyes(void) {
 ISR (INT0_vect) {
   // Turns eyes red
   currentColor = RED;
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsRight.setPixelColor(i, currentColor);
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsLeft.setPixelColor(i, currentColor);
+  pixelsRight.setPixelColor(0, currentColor);
+  pixelsLeft.setPixelColor(0, currentColor);
   // Stops any interrupts on the PIR sensor pin
   stopPinInterrupt(PIN2);
-  // PLays next song after turning eyes red on next loop pass
+  // Plays next song after turning eyes red on next loop pass
   postTask(app, playNextSong, UNUSED);
 }
 
 // Resets the eye color to white. On next toggleEyes timer expiry, color will change
 void resetColor(void) {
   currentColor = WHITE;
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsRight.setPixelColor(i, currentColor);
-  for (uint8_t i = 0; i < NUMPIXELS; i++) 
-    pixelsLeft.setPixelColor(i, currentColor);
+  pixelsRight.setPixelColor(0, currentColor);
+  pixelsLeft.setPixelColor(0, currentColor);
 }
 
 // Plays next song on DF Mini Player, sets next song to be played and changes flag to show it is currently playing
