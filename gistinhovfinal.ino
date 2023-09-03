@@ -24,22 +24,7 @@
 #include <SoftwareSerial.h>
 #include "SchedulerVTimer.h"
 #include "DFRobotDFPlayerMini.h"
-
-// Macro definitions
-#define NEOPIXELPINRIGHT 6 
-#define NEOPIXELPINLEFT 7
-#define PIRPIN 2
-#define RXPIN 4
-#define TXPIN 5
-#define PIN2 0
-#define PIN3 1
-#define NUMPIXELS 1
-#define NUMSONGS 11
-#define UNUSED 0
-#define clearBit(reg, bit) (reg &= ~(1 << bit))
-#define ISCx1(x) ISC ## x ## 1
-#define ISCx0(x) ISC ## x ## 0
-#define INTx(x) INT ## x
+#include "defs.h"
 
 // Object creation
 Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
@@ -49,9 +34,9 @@ SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
 // Function prototypes
 void toggleEyes(void);
 void resetColor(void);
+void playNextSong(void);
 void allowPinInterrupt(uint8_t source);
 void stopPinInterrupt(uint8_t source);
-void playNextSong(void);
 
 // Global variables
 volatile bool eyesOn = false;
@@ -99,30 +84,20 @@ void toggleEyes(void) {
   if (eyesOn) { 
     pixelsRight.setPixelColor(0, OFF);
     pixelsLeft.setPixelColor(0, OFF);
+    
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = false;
   } else {
     pixelsRight.setPixelColor(0, currentColor);
     pixelsLeft.setPixelColor(0, currentColor);
+    
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = true;
   }
   // Restarts timer to toggle eyes again in 1s
   startVTimer(toggleEyes, 200, UNUSED);
-}
-
-// Handles an ISR interrupt, turning eyes red
-ISR (INT0_vect) {
-  // Turns eyes red
-  currentColor = RED;
-  pixelsRight.setPixelColor(0, currentColor);
-  pixelsLeft.setPixelColor(0, currentColor);
-  // Stops any interrupts on the PIR sensor pin
-  stopPinInterrupt(PIN2);
-  // Plays next song after turning eyes red on next loop pass
-  postTask(app, playNextSong, UNUSED);
 }
 
 // Resets the eye color to white. On next toggleEyes timer expiry, color will change
@@ -141,6 +116,19 @@ void playNextSong(void) {
   currentlyPlaying = true;
   // Allows an interrupt to occur when the busy pin (pin 3) rises to HIGH after song ends
   allowPinInterrupt(PIN3);
+}
+
+// Handles an ISR interrupt, turning eyes red
+ISR (INT0_vect) {
+  // Turns eyes red
+  currentColor = RED;
+  
+  pixelsRight.setPixelColor(0, currentColor);
+  pixelsLeft.setPixelColor(0, currentColor);
+  // Stops any interrupts on the PIR sensor pin
+  stopPinInterrupt(PIN2);
+  // Plays next song after turning eyes red on next loop pass
+  postTask(app, playNextSong, UNUSED);
 }
 
 // Handles a busy pin interrupt (song over) and resets eye color
@@ -164,4 +152,3 @@ void allowPinInterrupt(uint8_t source) {
 void stopPinInterupt(uint8_t source) {
   EIMSK = clearBit(EIMSK, INTx(source));
 }
-
