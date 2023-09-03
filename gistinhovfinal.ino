@@ -52,9 +52,9 @@ void playNextSong(void);
 
 // Global variables
 volatile bool eyesOn = false;
-volatile uint32_t WHITE = pixelsRight.Color(255, 255, 255);
-volatile uint32_t RED = pixelsRight.Color(255, 0, 0);
-volatile uint32_t OFF = pixelsRight.Color(0, 0, 0);
+volatile const uint32_t WHITE = pixelsRight.Color(255, 255, 255);
+volatile const uint32_t RED = pixelsRight.Color(255, 0, 0);
+volatile const uint32_t OFF = pixelsRight.Color(0, 0, 0);
 volatile uint32_t currentColor = WHITE;
 volatile uint8_t nextSong = 1;
 volatile bool currentlyPlaying = false;
