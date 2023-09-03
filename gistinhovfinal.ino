@@ -84,14 +84,12 @@ void toggleEyes(void) {
   if (eyesOn) { 
     pixelsRight.setPixelColor(0, OFF);
     pixelsLeft.setPixelColor(0, OFF);
-    
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = false;
   } else {
     pixelsRight.setPixelColor(0, currentColor);
     pixelsLeft.setPixelColor(0, currentColor);
-    
     pixelsRight.show();
     pixelsLeft.show();
     eyesOn = true;
@@ -122,7 +120,6 @@ void playNextSong(void) {
 ISR (INT0_vect) {
   // Turns eyes red
   currentColor = RED;
-  
   pixelsRight.setPixelColor(0, currentColor);
   pixelsLeft.setPixelColor(0, currentColor);
   // Stops any interrupts on the PIR sensor pin
