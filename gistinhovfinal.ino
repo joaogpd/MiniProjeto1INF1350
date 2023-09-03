@@ -144,6 +144,7 @@ ISR (INT1_vect) {
 
 // Allow for INT0 or INT1 interrupts to happen
 void allowPinInterrupt(uint8_t source) {
+  // Interrupt on rising 
   EICRA |= (1 << ISCx1(source)) | (1 << ISCx0(source));
   EIMSK |= (1 << INTx(source));
 }
