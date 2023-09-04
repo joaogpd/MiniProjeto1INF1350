@@ -109,7 +109,7 @@ void toggleEyes(void) {
 /**
   * Altera a cor dos olhos para branco. Na próxima vez que o timer 
   * de toggleEyes expirar, a cor irá mudar.
-  */.
+  */
 void resetColor(void) {
   currentColor = WHITE;
   for (int i = 0; i < NUMPIXELS; i++)
