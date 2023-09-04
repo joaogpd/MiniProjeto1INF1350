@@ -27,9 +27,13 @@
 #include "defs.h"
 
 // Instanciação de objetos
+/**> Objeto referente ao NeoPixel localizado no olho direito */
 Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
+/**> Objeto referente ao NeoPixel localizado no olho esquerdo */
 Adafruit_NeoPixel pixelsLeft(NUMPIXELS, NEOPIXELPINLEFT, NEO_GRB + NEO_KHZ800);
+/**> Objeto de Software Serial usado pelo DFPlayerMini */
 SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
+/**> Objeto do DFPlayerMini */
 DFRobotDFPlayerMini myDFPlayer;
 
 // Protótipos de funções
@@ -40,13 +44,23 @@ void allowPinInterrupt(uint8_t source);
 void stopPinInterrupt(uint8_t source);
 
 // Variáveis globais
+/**> Variável que determina se os LEDs dos olhos estão acesos ou não no momento */
 volatile bool eyesOn = false;
+/**> Valor que representa a cor branca na biblioteca do NeoPixel */
 volatile const uint32_t WHITE = pixelsRight.Color(255, 255, 255);
+/**> Valor que representa a cor vermelha na biblioteca do NeoPixel */
 volatile const uint32_t RED = pixelsRight.Color(255, 0, 0);
+/**> Valor que representa a ausência de cor na biblioteca do NeoPixel */
 volatile const uint32_t OFF = pixelsRight.Color(0, 0, 0);
+/**> Variável que guarda a cor atual dos olhos */
 volatile uint32_t currentColor = WHITE;
+/**> Contador da próxima música que deve tocar */
 volatile uint8_t nextSong = 1;
 
+/**
+ * Função de setup do modelo de programação do Arduino, 
+ * roda somente uma vez no início da execução.
+ */
 void setup() {
   // Inicializa SWSerial para DF Mini Player
   dfMiniSerial.begin(9600);
@@ -75,6 +89,10 @@ void setup() {
   startVTimer(toggleEyes, 200, UNUSED);
 }
 
+/**
+ * Função de loop do modelo de programação do Arduino, 
+ * roda enquanto o programa está ativo.
+ */
 void loop() {
   // Busca tasks para executar 
   procTasks();
