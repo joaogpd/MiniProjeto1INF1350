@@ -120,7 +120,8 @@ void resetColor(void) {
 }
 
 /** Toca a próxima música no DF Mini Player. Marca a próxima música para ser executada
-  * e altera uma flag para mostrar que ela está tocando no momento. 
+  * e altera uma flag para mostrar que ela está tocando no momento. Permite interrupção
+  * no pino 3 (BUSY pin), que deve ser gerada quando a música terminar de tocar 
   */
 void playNextSong(void) {
   myDFPlayer.play(nextSong);
@@ -128,41 +129,48 @@ void playNextSong(void) {
   if (nextSong > NUMSONGS)
     nextSong = 1;
   currentlyPlaying = true;
-  // Allows an interrupt to occur when the busy pin (pin 3) rises to HIGH after song ends
+  // Permite uma interrupção ocorrer quando o pino busy (pino 3) muda para HIGH após a música terminar
   allowPinInterrupt(PIN3);
 }
 
-// Handles an ISR interrupt, turning eyes red
+/**
+ * Lida com uma interrupção de INT0 (pino 2). Muda a cor dos olhos para vermelho, para interrupções do 
+ * sensor PIR e enfileira a task de tocar a próxima música.
+ */
 ISR (INT0_vect) {
-  // Turns eyes red
+  // Muda cor dos olhos para vermelho
   currentColor = RED;
   for (int i = 0; i < NUMPIXELS; i++)
     pixelsRight.setPixelColor(i, currentColor);
   for (int i = 0; i < NUMPIXELS; i++)
     pixelsLeft.setPixelColor(i, currentColor);
-  // Make changes take effect
+  // Faz mudanças tomarem efeito
   pixelsLeft.show();
   pixelsRight.show();
-  // Eyes are now turned on
+  // Olhos agora estão ligados
   eyesOn = true;
-  // Stops any interrupts on the PIR sensor pin
+  // Para qualquer interrupção no pino do sensor PIR
   stopPinInterrupt(PIN2);
-  // Plays next song after turning eyes red on next loop pass
+  // Toca a próxima música na próxima passada do loop
   postTask(app, playNextSong, UNUSED);
 }
 
+
+/**
+ * Lida com uma interrupção de INT1 (pino 3). Reseta cor do olho para branco.
+ */
 // Handles a busy pin interrupt (song over) and resets eye color
 ISR (INT1_vect) {
   currentlyPlaying = false;
-  // Resets eye color to white after song finishes
+  // Muda a cor dos olhos para branco
   resetColor();
-  // Stops an interrupt from occuring on the busy pin (pin 3)
+  // Para interrupções no busy pin (pino 3)
   stopPinInterrupt(PIN3);
-  // Allows for PIR interrupts to occur
+  // Permite interrupções de PIR
   allowPinInterrupt(PIN2);
 }
 
-// Allow for INT0 or INT1 interrupts to happen
+// Permite interrupções de INT0 ou INT1
 void allowPinInterrupt(uint8_t source) {
   // Interrupt on rising 
   if (!source) {
