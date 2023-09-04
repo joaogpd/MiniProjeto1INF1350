@@ -26,20 +26,20 @@
 #include "DFRobotDFPlayerMini.h"
 #include "defs.h"
 
-// Object creation
+// Instanciação de objetos
 Adafruit_NeoPixel pixelsRight(NUMPIXELS, NEOPIXELPINRIGHT, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel pixelsLeft(NUMPIXELS, NEOPIXELPINLEFT, NEO_GRB + NEO_KHZ800);
 SoftwareSerial dfMiniSerial(RXPIN, TXPIN);
 DFRobotDFPlayerMini myDFPlayer;
 
-// Function prototypes
+// Protótipos de funções
 void toggleEyes(void);
 void resetColor(void);
 void playNextSong(void);
 void allowPinInterrupt(uint8_t source);
 void stopPinInterrupt(uint8_t source);
 
-// Global variables
+// Variáveis globais
 volatile bool eyesOn = false;
 volatile const uint32_t WHITE = pixelsRight.Color(255, 255, 255);
 volatile const uint32_t RED = pixelsRight.Color(255, 0, 0);
@@ -49,39 +49,42 @@ volatile uint8_t nextSong = 1;
 volatile bool currentlyPlaying = false;
 
 void setup() {
-  // Start Serial
+  // Inicializa SWSerial para DF Mini Player
   dfMiniSerial.begin(9600);
-  // Start DFPMini Player
-  myDFPlayer.begin(dfMiniSerial, /*isACK = */true, /*doReset = */false);
-  // Setup all tasks 
+  // Inicializa DFPMini Player
+  myDFPlayer.begin(dfMiniSerial, true, false);
+  // Realiza setup de tasks dos tipos app e vtimer no scheduler 
   setupTasks(vtimer, toggleEyes);
   setupTasks(app, playNextSong);
-  // Virtual timer module initialization
+  // Inicializa o módulo de timer virtual
   initSchedulerVTTimer();
 
-  // Allows an interrupt to occur on the PIR sensor pin
+  // Permite uma interrupção no pino do sensor PIR
   allowPinInterrupt(PIN2);
 
-  // Initialize NeoPixel object
+  // Inicializa objetos do Neopixel LED
   pixelsRight.begin(); 
   pixelsLeft.begin();
 
-  // Set NeoPixel initial colors
+  // Determina a cor inicial dos NeoPixel
   for (int i = 0; i < NUMPIXELS; i++)
     pixelsRight.setPixelColor(i, currentColor);
   for (int i = 0; i < NUMPIXELS; i++)
     pixelsLeft.setPixelColor(i, currentColor);
 
-  // Starts timer to toggle eyes every 1s
+  // Inicializa um timer para piscar os olhos a cada 200ms
   startVTimer(toggleEyes, 200, UNUSED);
 }
 
 void loop() {
-  // Looks for tasks to execute
+  // Busca tasks para executar 
   procTasks();
 }
 
-// Toggles the NeoPixel leds, using a global variable to check current state
+/**
+  * Pisca os LEDs dos olhos. Caso esteja ligado, desliga, caso esteja desligado, liga.
+  * No final da função reinicializa o timer de 200ms para piscar os olhos.
+  */
 void toggleEyes(void) {
   if (eyesOn) { 
     for (int i = 0; i < NUMPIXELS; i++)
@@ -100,11 +103,14 @@ void toggleEyes(void) {
     pixelsLeft.show();
     eyesOn = true;
   }
-  // Restarts timer to toggle eyes again in 200s
+  // Reinicializa o timer para piscar os olhos de novo em 200ms
   startVTimer(toggleEyes, 200, UNUSED);
 }
 
-// Resets the eye color to white. On next toggleEyes timer expiry, color will change
+/**
+  * Altera a cor dos olhos para branco. Na próxima vez que o timer 
+  * de toggleEyes expirar, a cor irá mudar.
+  */.
 void resetColor(void) {
   currentColor = WHITE;
   for (int i = 0; i < NUMPIXELS; i++)
@@ -113,7 +119,9 @@ void resetColor(void) {
     pixelsLeft.setPixelColor(i, currentColor);
 }
 
-// Plays next song on DF Mini Player, sets next song to be played and changes flag to show it is currently playing
+/** Toca a próxima música no DF Mini Player. Marca a próxima música para ser executada
+  * e altera uma flag para mostrar que ela está tocando no momento. 
+  */
 void playNextSong(void) {
   myDFPlayer.play(nextSong);
   nextSong++;
