@@ -167,7 +167,10 @@ ISR (INT1_vect) {
   allowPinInterrupt(PIN2);
 }
 
-// Permite interrupções de INT0 ou INT1
+/**
+ * Permite interrupções de INT0 ou INT1.
+ * @param source fonte da interrupção, pode ser 0 ou 1
+ */
 void allowPinInterrupt(uint8_t source) {
   // Interrupção em rising
   if (!source) {
@@ -179,7 +182,10 @@ void allowPinInterrupt(uint8_t source) {
   }
 }
 
-// Para interrupções de INT0 e INT1
+/**
+ * Impede interrupções de INT0 ou INT1.
+ * @param source fonte da interrupção, pode ser 0 ou 1
+ */
 void stopPinInterrupt(uint8_t source) {
   if (!source)
     EIMSK = clearBit(EIMSK, INT0);
