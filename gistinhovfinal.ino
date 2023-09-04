@@ -46,7 +46,6 @@ volatile const uint32_t RED = pixelsRight.Color(255, 0, 0);
 volatile const uint32_t OFF = pixelsRight.Color(0, 0, 0);
 volatile uint32_t currentColor = WHITE;
 volatile uint8_t nextSong = 1;
-volatile bool currentlyPlaying = false;
 
 void setup() {
   // Inicializa SWSerial para DF Mini Player
@@ -128,7 +127,6 @@ void playNextSong(void) {
   nextSong++;
   if (nextSong > NUMSONGS)
     nextSong = 1;
-  currentlyPlaying = true;
   // Permite uma interrupção ocorrer quando o pino busy (pino 3) muda para HIGH após a música terminar
   allowPinInterrupt(PIN3);
 }
@@ -161,7 +159,6 @@ ISR (INT0_vect) {
  */
 // Handles a busy pin interrupt (song over) and resets eye color
 ISR (INT1_vect) {
-  currentlyPlaying = false;
   // Muda a cor dos olhos para branco
   resetColor();
   // Para interrupções no busy pin (pino 3)
