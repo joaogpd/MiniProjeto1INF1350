@@ -99,9 +99,9 @@ void loop() {
 }
 
 /**
-  * Pisca os LEDs dos olhos. Caso esteja ligado, desliga, caso esteja desligado, liga.
-  * No final da função reinicializa o timer de 200ms para piscar os olhos.
-  */
+ * Pisca os LEDs dos olhos. Caso esteja ligado, desliga, caso esteja desligado, liga.
+ * No final da função reinicializa o timer de 200ms para piscar os olhos.
+ */
 void toggleEyes(void) {
   if (eyesOn) { 
     for (int i = 0; i < NUMPIXELS; i++)
@@ -125,9 +125,9 @@ void toggleEyes(void) {
 }
 
 /**
-  * Altera a cor dos olhos para branco. Na próxima vez que o timer 
-  * de toggleEyes expirar, a cor irá mudar.
-  */
+ * Altera a cor dos olhos para branco. Na próxima vez que o timer 
+ * de toggleEyes expirar, a cor irá mudar.
+ */
 void resetColor(void) {
   currentColor = WHITE;
   for (int i = 0; i < NUMPIXELS; i++)
@@ -136,10 +136,11 @@ void resetColor(void) {
     pixelsLeft.setPixelColor(i, currentColor);
 }
 
-/** Toca a próxima música no DF Mini Player. Marca a próxima música para ser executada
-  * e altera uma flag para mostrar que ela está tocando no momento. Permite interrupção
-  * no pino 3 (BUSY pin), que deve ser gerada quando a música terminar de tocar 
-  */
+/** 
+ * Toca a próxima música no DF Mini Player. Marca a próxima música para ser executada
+ * e altera uma flag para mostrar que ela está tocando no momento. Permite interrupção
+ * no pino 3 (BUSY pin), que deve ser gerada quando a música terminar de tocar 
+ */
 void playNextSong(void) {
   myDFPlayer.play(nextSong);
   nextSong++;
