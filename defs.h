@@ -1,3 +1,18 @@
+/***************************************************************************
+*
+*  INF1350 - Sistemas Reativos
+*  Prof.: Adriano Branco
+*  Monitor: Pablo Nascimento
+*  Semestre: 2023.2
+*  Grupo 1: Cristiane Guimarães
+*           João Gabriel Peixoto
+*           Luiz Fernando Costa
+*
+*  PROJETO 1 - GISTEIN
+*
+***************************************************************************/
+
+
 #ifndef DEFS_H
 #define DEFS_H
 
