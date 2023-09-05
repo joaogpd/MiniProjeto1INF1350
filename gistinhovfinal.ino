@@ -1,3 +1,18 @@
+/***************************************************************************
+*
+*  INF1350 - Sistemas Reativos
+*  Prof.: Adriano Branco
+*  Monitor: Pablo Nascimento
+*  Semestre: 2023.2
+*  Grupo 1: Cristiane Guimarães
+*           João Gabriel Peixoto
+*           Luiz Fernando Costa
+*
+*  PROJETO 1 - GISTEIN
+*
+***************************************************************************/
+
+
 // Ard.Pin - 328.pin - Device Pin    -   Device
 // 00  RXD    PD0       USB               USB Cable
 // 01  TXD    PD1       USB               USB Cable
