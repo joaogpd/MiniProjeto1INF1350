@@ -1,0 +1,120 @@
+\hypertarget{defs_8h}{}\doxysection{defs.\+h File Reference}
+\label{defs_8h}\index{defs.h@{defs.h}}
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{defs_8h_a9f84720b74593b1df34de3e104b49633}{NEOPIXELPINRIGHT}}~6
+\item 
+\#define \mbox{\hyperlink{defs_8h_a13919cb8d2f702c58d348e43f2cd3bba}{NEOPIXELPINLEFT}}~7
+\item 
+\#define \mbox{\hyperlink{defs_8h_a049784efd9758fe71607fe5f1a65d36a}{PIRPIN}}~2
+\item 
+\#define \mbox{\hyperlink{defs_8h_aeb84a810b48ab98f8218407ede651746}{RXPIN}}~10
+\item 
+\#define \mbox{\hyperlink{defs_8h_ad7371134b74d77a9646ab529bda75f1f}{TXPIN}}~11
+\item 
+\#define \mbox{\hyperlink{defs_8h_a903210ad84aed4458cbc75b489f9bb7e}{PIN2}}~0
+\item 
+\#define \mbox{\hyperlink{defs_8h_ac4b639acb4bf160a49ff3c0d8fa80fc4}{PIN3}}~1
+\item 
+\#define \mbox{\hyperlink{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}{NUMPIXELS}}~2
+\item 
+\#define \mbox{\hyperlink{defs_8h_a13f069ea52c43e392ae94df7522e4428}{NUMSONGS}}~46
+\item 
+\#define \mbox{\hyperlink{defs_8h_addf5ec070e9499d36b7f2009ce736076}{UNUSED}}~0
+\item 
+\#define \mbox{\hyperlink{defs_8h_a7f941144426bf5ac58c5e580d108952b}{clear\+Bit}}(reg,  bit)~(reg \&= $\sim$(1 $<$$<$ bit))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{defs_8h_a7f941144426bf5ac58c5e580d108952b}\label{defs_8h_a7f941144426bf5ac58c5e580d108952b}} 
+\index{defs.h@{defs.h}!clearBit@{clearBit}}
+\index{clearBit@{clearBit}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{clearBit}{clearBit}}
+{\footnotesize\ttfamily \#define clear\+Bit(\begin{DoxyParamCaption}\item[{}]{reg,  }\item[{}]{bit }\end{DoxyParamCaption})~(reg \&= $\sim$(1 $<$$<$ bit))}
+
+\begin{quote}
+Macro que limpa um bit de um valor recebido \end{quote}
+\mbox{\Hypertarget{defs_8h_a13919cb8d2f702c58d348e43f2cd3bba}\label{defs_8h_a13919cb8d2f702c58d348e43f2cd3bba}} 
+\index{defs.h@{defs.h}!NEOPIXELPINLEFT@{NEOPIXELPINLEFT}}
+\index{NEOPIXELPINLEFT@{NEOPIXELPINLEFT}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{NEOPIXELPINLEFT}{NEOPIXELPINLEFT}}
+{\footnotesize\ttfamily \#define NEOPIXELPINLEFT~7}
+
+\begin{quote}
+Pino dos LEDs Neo\+Pixel do olho esquerdo \end{quote}
+\mbox{\Hypertarget{defs_8h_a9f84720b74593b1df34de3e104b49633}\label{defs_8h_a9f84720b74593b1df34de3e104b49633}} 
+\index{defs.h@{defs.h}!NEOPIXELPINRIGHT@{NEOPIXELPINRIGHT}}
+\index{NEOPIXELPINRIGHT@{NEOPIXELPINRIGHT}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{NEOPIXELPINRIGHT}{NEOPIXELPINRIGHT}}
+{\footnotesize\ttfamily \#define NEOPIXELPINRIGHT~6}
+
+\begin{quote}
+Pino dos LEDs Neo\+Pixel do olho direito \end{quote}
+\mbox{\Hypertarget{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}\label{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}} 
+\index{defs.h@{defs.h}!NUMPIXELS@{NUMPIXELS}}
+\index{NUMPIXELS@{NUMPIXELS}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{NUMPIXELS}{NUMPIXELS}}
+{\footnotesize\ttfamily \#define NUMPIXELS~2}
+
+\begin{quote}
+Número de LEDS Neo\+Pixel em cada pino \end{quote}
+\mbox{\Hypertarget{defs_8h_a13f069ea52c43e392ae94df7522e4428}\label{defs_8h_a13f069ea52c43e392ae94df7522e4428}} 
+\index{defs.h@{defs.h}!NUMSONGS@{NUMSONGS}}
+\index{NUMSONGS@{NUMSONGS}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{NUMSONGS}{NUMSONGS}}
+{\footnotesize\ttfamily \#define NUMSONGS~46}
+
+\begin{quote}
+Número de músicas no cartão SD \end{quote}
+\mbox{\Hypertarget{defs_8h_a903210ad84aed4458cbc75b489f9bb7e}\label{defs_8h_a903210ad84aed4458cbc75b489f9bb7e}} 
+\index{defs.h@{defs.h}!PIN2@{PIN2}}
+\index{PIN2@{PIN2}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{PIN2}{PIN2}}
+{\footnotesize\ttfamily \#define PIN2~0}
+
+\begin{quote}
+Valor da interrupção referente ao pino 2 (INT0) \end{quote}
+\mbox{\Hypertarget{defs_8h_ac4b639acb4bf160a49ff3c0d8fa80fc4}\label{defs_8h_ac4b639acb4bf160a49ff3c0d8fa80fc4}} 
+\index{defs.h@{defs.h}!PIN3@{PIN3}}
+\index{PIN3@{PIN3}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{PIN3}{PIN3}}
+{\footnotesize\ttfamily \#define PIN3~1}
+
+\begin{quote}
+Valor da interrupção referente ao pino 3 (INT1) \end{quote}
+\mbox{\Hypertarget{defs_8h_a049784efd9758fe71607fe5f1a65d36a}\label{defs_8h_a049784efd9758fe71607fe5f1a65d36a}} 
+\index{defs.h@{defs.h}!PIRPIN@{PIRPIN}}
+\index{PIRPIN@{PIRPIN}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{PIRPIN}{PIRPIN}}
+{\footnotesize\ttfamily \#define PIRPIN~2}
+
+\begin{quote}
+Pino do sensor PIR \end{quote}
+\mbox{\Hypertarget{defs_8h_aeb84a810b48ab98f8218407ede651746}\label{defs_8h_aeb84a810b48ab98f8218407ede651746}} 
+\index{defs.h@{defs.h}!RXPIN@{RXPIN}}
+\index{RXPIN@{RXPIN}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{RXPIN}{RXPIN}}
+{\footnotesize\ttfamily \#define RXPIN~10}
+
+\begin{quote}
+Pino do TX do DFMini Player (RX para o Arduino) \end{quote}
+\mbox{\Hypertarget{defs_8h_ad7371134b74d77a9646ab529bda75f1f}\label{defs_8h_ad7371134b74d77a9646ab529bda75f1f}} 
+\index{defs.h@{defs.h}!TXPIN@{TXPIN}}
+\index{TXPIN@{TXPIN}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{TXPIN}{TXPIN}}
+{\footnotesize\ttfamily \#define TXPIN~11}
+
+\begin{quote}
+Pino do RX do DFMini Player (TX para o Arduino) \end{quote}
+\mbox{\Hypertarget{defs_8h_addf5ec070e9499d36b7f2009ce736076}\label{defs_8h_addf5ec070e9499d36b7f2009ce736076}} 
+\index{defs.h@{defs.h}!UNUSED@{UNUSED}}
+\index{UNUSED@{UNUSED}!defs.h@{defs.h}}
+\doxysubsubsection{\texorpdfstring{UNUSED}{UNUSED}}
+{\footnotesize\ttfamily \#define UNUSED~0}
+
+\begin{quote}
+Valor usado para ignorar o parâmetro de argumento da biblioteca Scheduler\+VTimer \end{quote}

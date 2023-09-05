@@ -1,0 +1,102 @@
+\begin{theindex}
+
+  \item {allowPinInterrupt}
+    \subitem {gistinhovfinal.c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {currentColor}
+    \subitem {gistinhovfinal.c}, \hyperpage{6}
+
+  \indexspace
+
+  \item {defs.h}, \hyperpage{3}
+  \item {dfMiniSerial}
+    \subitem {gistinhovfinal.c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {eyesOn}
+    \subitem {gistinhovfinal.c}, \hyperpage{6}
+
+  \indexspace
+
+  \item {gistinhovfinal.c}, \hyperpage{3}
+    \subitem {allowPinInterrupt}, \hyperpage{4}
+    \subitem {currentColor}, \hyperpage{6}
+    \subitem {dfMiniSerial}, \hyperpage{4}
+    \subitem {eyesOn}, \hyperpage{6}
+    \subitem {ISR}, \hyperpage{4}
+    \subitem {loop}, \hyperpage{5}
+    \subitem {myDFPlayer}, \hyperpage{7}
+    \subitem {nextSong}, \hyperpage{7}
+    \subitem {OFF}, \hyperpage{7}
+    \subitem {pixelsLeft}, \hyperpage{5}
+    \subitem {pixelsRight}, \hyperpage{5}
+    \subitem {playNextSong}, \hyperpage{5}
+    \subitem {RED}, \hyperpage{7}
+    \subitem {resetColor}, \hyperpage{5}
+    \subitem {setup}, \hyperpage{6}
+    \subitem {stopPinInterrupt}, \hyperpage{6}
+    \subitem {toggleEyes}, \hyperpage{6}
+    \subitem {WHITE}, \hyperpage{7}
+
+  \indexspace
+
+  \item {ISR}
+    \subitem {gistinhovfinal.c}, \hyperpage{4}
+
+  \indexspace
+
+  \item {loop}
+    \subitem {gistinhovfinal.c}, \hyperpage{5}
+
+  \indexspace
+
+  \item {myDFPlayer}
+    \subitem {gistinhovfinal.c}, \hyperpage{7}
+
+  \indexspace
+
+  \item {nextSong}
+    \subitem {gistinhovfinal.c}, \hyperpage{7}
+
+  \indexspace
+
+  \item {OFF}
+    \subitem {gistinhovfinal.c}, \hyperpage{7}
+
+  \indexspace
+
+  \item {pixelsLeft}
+    \subitem {gistinhovfinal.c}, \hyperpage{5}
+  \item {pixelsRight}
+    \subitem {gistinhovfinal.c}, \hyperpage{5}
+  \item {playNextSong}
+    \subitem {gistinhovfinal.c}, \hyperpage{5}
+
+  \indexspace
+
+  \item {RED}
+    \subitem {gistinhovfinal.c}, \hyperpage{7}
+  \item {resetColor}
+    \subitem {gistinhovfinal.c}, \hyperpage{5}
+
+  \indexspace
+
+  \item {setup}
+    \subitem {gistinhovfinal.c}, \hyperpage{6}
+  \item {stopPinInterrupt}
+    \subitem {gistinhovfinal.c}, \hyperpage{6}
+
+  \indexspace
+
+  \item {toggleEyes}
+    \subitem {gistinhovfinal.c}, \hyperpage{6}
+
+  \indexspace
+
+  \item {WHITE}
+    \subitem {gistinhovfinal.c}, \hyperpage{7}
+
+\end{theindex}

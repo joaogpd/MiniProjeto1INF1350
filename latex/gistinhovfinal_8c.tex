@@ -1,0 +1,211 @@
+\hypertarget{gistinhovfinal_8c}{}\doxysection{gistinhovfinal.\+c File Reference}
+\label{gistinhovfinal_8c}\index{gistinhovfinal.c@{gistinhovfinal.c}}
+{\ttfamily \#include $<$Adafruit\+\_\+\+Neo\+Pixel.\+h$>$}\newline
+\vspace*{1cm}
+Adafruit NeoPixel by Adafruit, version 1.11.0\\
+{\ttfamily \#include $<$Software\+Serial.\+h$>$}\newline
+\vspace*{1cm}
+SoftwareSerial by PaulStoffregen\\
+{\ttfamily \#include \char`\"{}Scheduler\+VTimer.\+h\char`\"{}}\newline
+\vspace*{1cm}
+SchedulerVTimer by Adriano Branco\\
+{\ttfamily \#include \char`\"{}DFRobot\+DFPlayer\+Mini.\+h\char`\"{}}\newline
+\vspace*{1cm}
+DFRobotDFPlayerMini by DFRobot, version 1.0.6\\
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+Include dependency graph for gistinhovfinal.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Adafruit\+\_\+\+Neo\+Pixel \mbox{\hyperlink{gistinhovfinal_8c_a9b7079fabef7819ae9403f2ce4ad61a1}{pixels\+Right}} (\mbox{\hyperlink{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}{NUMPIXELS}}, \mbox{\hyperlink{defs_8h_a9f84720b74593b1df34de3e104b49633}{NEOPIXELPINRIGHT}}, NEO\+\_\+\+GRB+NEO\+\_\+\+KHZ800)
+\item 
+Adafruit\+\_\+\+Neo\+Pixel \mbox{\hyperlink{gistinhovfinal_8c_a5a098aad7cd5d18be251142af0816695}{pixels\+Left}} (\mbox{\hyperlink{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}{NUMPIXELS}}, \mbox{\hyperlink{defs_8h_a13919cb8d2f702c58d348e43f2cd3bba}{NEOPIXELPINLEFT}}, NEO\+\_\+\+GRB+NEO\+\_\+\+KHZ800)
+\item 
+Software\+Serial \mbox{\hyperlink{gistinhovfinal_8c_aa1dc2327777beb268399661112b7d8fb}{df\+Mini\+Serial}} (\mbox{\hyperlink{defs_8h_aeb84a810b48ab98f8218407ede651746}{RXPIN}}, \mbox{\hyperlink{defs_8h_ad7371134b74d77a9646ab529bda75f1f}{TXPIN}})
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_acdff07ed3fb09dc807e17ad746b4a2c6}{toggle\+Eyes}} (void)
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_af76a7b1c7368760dafd6ff48352c3544}{reset\+Color}} (void)
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_a1f0d80808ce1511dd74b7442c519a65b}{play\+Next\+Song}} (void)
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_a98eecfd1d8f8b3bb3584ddc34c6bc068}{allow\+Pin\+Interrupt}} (uint8\+\_\+t source)
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_a520006c63458913629115fb518fd8d5e}{stop\+Pin\+Interrupt}} (uint8\+\_\+t source)
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{gistinhovfinal_8c_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\item 
+\mbox{\hyperlink{gistinhovfinal_8c_afea150fcd685610cb9f7672fce361e53}{ISR}} (INT0\+\_\+vect)
+\item 
+\mbox{\hyperlink{gistinhovfinal_8c_a22acfb428840c6d9aa212764589cf6c6}{ISR}} (INT1\+\_\+vect)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+DFRobot\+DFPlayer\+Mini \mbox{\hyperlink{gistinhovfinal_8c_af3d87283b673ca2c5039bae393306a9e}{my\+DFPlayer}}
+\item 
+volatile bool \mbox{\hyperlink{gistinhovfinal_8c_a8b6d055ac28495abb6a822d57bf6f7d2}{eyes\+On}} = false
+\item 
+volatile const uint32\+\_\+t \mbox{\hyperlink{gistinhovfinal_8c_a61f466e9622a4c4bd3acb883654d14d9}{WHITE}} = pixels\+Right.\+Color(255, 255, 255)
+\item 
+volatile const uint32\+\_\+t \mbox{\hyperlink{gistinhovfinal_8c_a2453a8c8507b3b8d94bb0237ac6d928b}{RED}} = pixels\+Right.\+Color(255, 0, 0)
+\item 
+volatile const uint32\+\_\+t \mbox{\hyperlink{gistinhovfinal_8c_a5850750545db740a424dbeebb7c59792}{OFF}} = pixels\+Right.\+Color(0, 0, 0)
+\item 
+volatile uint32\+\_\+t \mbox{\hyperlink{gistinhovfinal_8c_a6baf72a68a7f4e7943fbe15c94ddb261}{current\+Color}} = \mbox{\hyperlink{gistinhovfinal_8c_a61f466e9622a4c4bd3acb883654d14d9}{WHITE}}
+\item 
+volatile uint8\+\_\+t \mbox{\hyperlink{gistinhovfinal_8c_a03bbb516277799b5ca11638c3643010c}{next\+Song}} = 1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{gistinhovfinal_8c_a98eecfd1d8f8b3bb3584ddc34c6bc068}\label{gistinhovfinal_8c_a98eecfd1d8f8b3bb3584ddc34c6bc068}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!allowPinInterrupt@{allowPinInterrupt}}
+\index{allowPinInterrupt@{allowPinInterrupt}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{allowPinInterrupt()}{allowPinInterrupt()}}
+{\footnotesize\ttfamily void allow\+Pin\+Interrupt (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{source }\end{DoxyParamCaption})}
+
+Permite interrupções de INT0 ou INT1. 
+\begin{DoxyParams}{Parameters}
+{\em source} & fonte da interrupção, pode ser 0 ou 1 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gistinhovfinal_8c_aa1dc2327777beb268399661112b7d8fb}\label{gistinhovfinal_8c_aa1dc2327777beb268399661112b7d8fb}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!dfMiniSerial@{dfMiniSerial}}
+\index{dfMiniSerial@{dfMiniSerial}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{dfMiniSerial()}{dfMiniSerial()}}
+{\footnotesize\ttfamily Software\+Serial df\+Mini\+Serial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{defs_8h_aeb84a810b48ab98f8218407ede651746}{RXPIN}}}]{,  }\item[{\mbox{\hyperlink{defs_8h_ad7371134b74d77a9646ab529bda75f1f}{TXPIN}}}]{ }\end{DoxyParamCaption})}
+
+\begin{quote}
+Objeto de Software Serial usado pelo DFPlayer\+Mini \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_afea150fcd685610cb9f7672fce361e53}\label{gistinhovfinal_8c_afea150fcd685610cb9f7672fce361e53}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!ISR@{ISR}}
+\index{ISR@{ISR}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{ISR()}{ISR()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily ISR (\begin{DoxyParamCaption}\item[{INT0\+\_\+vect}]{ }\end{DoxyParamCaption})}
+
+Lida com uma interrupção de INT0 (pino 2). Muda a cor dos olhos para vermelho, para interrupções do sensor PIR e enfileira a task de tocar a próxima música. \mbox{\Hypertarget{gistinhovfinal_8c_a22acfb428840c6d9aa212764589cf6c6}\label{gistinhovfinal_8c_a22acfb428840c6d9aa212764589cf6c6}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!ISR@{ISR}}
+\index{ISR@{ISR}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{ISR()}{ISR()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily ISR (\begin{DoxyParamCaption}\item[{INT1\+\_\+vect}]{ }\end{DoxyParamCaption})}
+
+Lida com uma interrupção de INT1 (pino 3). Reseta cor do olho para branco. \mbox{\Hypertarget{gistinhovfinal_8c_afe461d27b9c48d5921c00d521181f12f}\label{gistinhovfinal_8c_afe461d27b9c48d5921c00d521181f12f}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!loop@{loop}}
+\index{loop@{loop}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Função de loop do modelo de programação do Arduino, roda enquanto o programa está ativo. \mbox{\Hypertarget{gistinhovfinal_8c_a5a098aad7cd5d18be251142af0816695}\label{gistinhovfinal_8c_a5a098aad7cd5d18be251142af0816695}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!pixelsLeft@{pixelsLeft}}
+\index{pixelsLeft@{pixelsLeft}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{pixelsLeft()}{pixelsLeft()}}
+{\footnotesize\ttfamily Adafruit\+\_\+\+Neo\+Pixel pixels\+Left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}{NUMPIXELS}}}]{,  }\item[{\mbox{\hyperlink{defs_8h_a13919cb8d2f702c58d348e43f2cd3bba}{NEOPIXELPINLEFT}}}]{,  }\item[{NEO\+\_\+\+GRB+}]{NEO\+\_\+\+KHZ800 }\end{DoxyParamCaption})}
+
+\begin{quote}
+Objeto referente ao Neo\+Pixel localizado no olho esquerdo \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a9b7079fabef7819ae9403f2ce4ad61a1}\label{gistinhovfinal_8c_a9b7079fabef7819ae9403f2ce4ad61a1}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!pixelsRight@{pixelsRight}}
+\index{pixelsRight@{pixelsRight}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{pixelsRight()}{pixelsRight()}}
+{\footnotesize\ttfamily Adafruit\+\_\+\+Neo\+Pixel pixels\+Right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{defs_8h_a733f7d5b0fd44b87044a3fc9d4594ceb}{NUMPIXELS}}}]{,  }\item[{\mbox{\hyperlink{defs_8h_a9f84720b74593b1df34de3e104b49633}{NEOPIXELPINRIGHT}}}]{,  }\item[{NEO\+\_\+\+GRB+}]{NEO\+\_\+\+KHZ800 }\end{DoxyParamCaption})}
+
+\begin{quote}
+Objeto referente ao Neo\+Pixel localizado no olho direito \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a1f0d80808ce1511dd74b7442c519a65b}\label{gistinhovfinal_8c_a1f0d80808ce1511dd74b7442c519a65b}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!playNextSong@{playNextSong}}
+\index{playNextSong@{playNextSong}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{playNextSong()}{playNextSong()}}
+{\footnotesize\ttfamily void play\+Next\+Song (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Toca a próxima música no DF Mini Player. Marca a próxima música para ser executada e altera uma flag para mostrar que ela está tocando no momento. Permite interrupção no pino 3 (BUSY pin), que deve ser gerada quando a música terminar de tocar \mbox{\Hypertarget{gistinhovfinal_8c_af76a7b1c7368760dafd6ff48352c3544}\label{gistinhovfinal_8c_af76a7b1c7368760dafd6ff48352c3544}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!resetColor@{resetColor}}
+\index{resetColor@{resetColor}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{resetColor()}{resetColor()}}
+{\footnotesize\ttfamily void reset\+Color (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Altera a cor dos olhos para branco. Na próxima vez que o timer de toggle\+Eyes expirar, a cor irá mudar. \mbox{\Hypertarget{gistinhovfinal_8c_a4fc01d736fe50cf5b977f755b675f11d}\label{gistinhovfinal_8c_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!setup@{setup}}
+\index{setup@{setup}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Função de setup do modelo de programação do Arduino, roda somente uma vez no início da execução. \mbox{\Hypertarget{gistinhovfinal_8c_a520006c63458913629115fb518fd8d5e}\label{gistinhovfinal_8c_a520006c63458913629115fb518fd8d5e}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!stopPinInterrupt@{stopPinInterrupt}}
+\index{stopPinInterrupt@{stopPinInterrupt}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{stopPinInterrupt()}{stopPinInterrupt()}}
+{\footnotesize\ttfamily void stop\+Pin\+Interrupt (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{source }\end{DoxyParamCaption})}
+
+Impede interrupções de INT0 ou INT1. 
+\begin{DoxyParams}{Parameters}
+{\em source} & fonte da interrupção, pode ser 0 ou 1 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gistinhovfinal_8c_acdff07ed3fb09dc807e17ad746b4a2c6}\label{gistinhovfinal_8c_acdff07ed3fb09dc807e17ad746b4a2c6}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!toggleEyes@{toggleEyes}}
+\index{toggleEyes@{toggleEyes}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{toggleEyes()}{toggleEyes()}}
+{\footnotesize\ttfamily void toggle\+Eyes (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Pisca os LEDs dos olhos. Caso esteja ligado, desliga, caso esteja desligado, liga. No final da função reinicializa o timer de 200ms para piscar os olhos. 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{gistinhovfinal_8c_a6baf72a68a7f4e7943fbe15c94ddb261}\label{gistinhovfinal_8c_a6baf72a68a7f4e7943fbe15c94ddb261}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!currentColor@{currentColor}}
+\index{currentColor@{currentColor}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{currentColor}{currentColor}}
+{\footnotesize\ttfamily volatile uint32\+\_\+t current\+Color = \mbox{\hyperlink{gistinhovfinal_8c_a61f466e9622a4c4bd3acb883654d14d9}{WHITE}}}
+
+\begin{quote}
+Variável que guarda a cor atual dos olhos \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a8b6d055ac28495abb6a822d57bf6f7d2}\label{gistinhovfinal_8c_a8b6d055ac28495abb6a822d57bf6f7d2}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!eyesOn@{eyesOn}}
+\index{eyesOn@{eyesOn}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{eyesOn}{eyesOn}}
+{\footnotesize\ttfamily volatile bool eyes\+On = false}
+
+\begin{quote}
+Variável que determina se os LEDs dos olhos estão acesos ou não no momento \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_af3d87283b673ca2c5039bae393306a9e}\label{gistinhovfinal_8c_af3d87283b673ca2c5039bae393306a9e}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!myDFPlayer@{myDFPlayer}}
+\index{myDFPlayer@{myDFPlayer}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{myDFPlayer}{myDFPlayer}}
+{\footnotesize\ttfamily DFRobot\+DFPlayer\+Mini my\+DFPlayer}
+
+\begin{quote}
+Objeto do DFPlayer\+Mini \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a03bbb516277799b5ca11638c3643010c}\label{gistinhovfinal_8c_a03bbb516277799b5ca11638c3643010c}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!nextSong@{nextSong}}
+\index{nextSong@{nextSong}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{nextSong}{nextSong}}
+{\footnotesize\ttfamily volatile uint8\+\_\+t next\+Song = 1}
+
+\begin{quote}
+Contador da próxima música que deve tocar \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a5850750545db740a424dbeebb7c59792}\label{gistinhovfinal_8c_a5850750545db740a424dbeebb7c59792}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!OFF@{OFF}}
+\index{OFF@{OFF}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{OFF}{OFF}}
+{\footnotesize\ttfamily volatile const uint32\+\_\+t OFF = pixels\+Right.\+Color(0, 0, 0)}
+
+\begin{quote}
+Valor que representa a ausência de cor na biblioteca do Neo\+Pixel \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a2453a8c8507b3b8d94bb0237ac6d928b}\label{gistinhovfinal_8c_a2453a8c8507b3b8d94bb0237ac6d928b}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!RED@{RED}}
+\index{RED@{RED}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{RED}{RED}}
+{\footnotesize\ttfamily volatile const uint32\+\_\+t RED = pixels\+Right.\+Color(255, 0, 0)}
+
+\begin{quote}
+Valor que representa a cor vermelha na biblioteca do Neo\+Pixel \end{quote}
+\mbox{\Hypertarget{gistinhovfinal_8c_a61f466e9622a4c4bd3acb883654d14d9}\label{gistinhovfinal_8c_a61f466e9622a4c4bd3acb883654d14d9}} 
+\index{gistinhovfinal.c@{gistinhovfinal.c}!WHITE@{WHITE}}
+\index{WHITE@{WHITE}!gistinhovfinal.c@{gistinhovfinal.c}}
+\doxysubsubsection{\texorpdfstring{WHITE}{WHITE}}
+{\footnotesize\ttfamily volatile const uint32\+\_\+t WHITE = pixels\+Right.\+Color(255, 255, 255)}
+
+\begin{quote}
+Valor que representa a cor branca na biblioteca do Neo\+Pixel \end{quote}

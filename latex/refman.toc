@@ -1,0 +1,28 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}File Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}File List}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Documentation}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}defs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}gistinhovfinal.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{3}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Function Documentation}{4}{subsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.1.1}allowPinInterrupt()}{4}{subsubsection.2.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.2.1.2}dfMiniSerial()}{4}{subsubsection.2.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.2.1.3}ISR()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{4}{subsubsection.2.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.2.1.4}ISR()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{5}{subsubsection.2.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.2.1.5}loop()}{5}{subsubsection.2.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.2.1.6}pixelsLeft()}{5}{subsubsection.2.2.1.6}%
+\contentsline {subsubsection}{\numberline {2.2.1.7}pixelsRight()}{5}{subsubsection.2.2.1.7}%
+\contentsline {subsubsection}{\numberline {2.2.1.8}playNextSong()}{5}{subsubsection.2.2.1.8}%
+\contentsline {subsubsection}{\numberline {2.2.1.9}resetColor()}{6}{subsubsection.2.2.1.9}%
+\contentsline {subsubsection}{\numberline {2.2.1.10}setup()}{6}{subsubsection.2.2.1.10}%
+\contentsline {subsubsection}{\numberline {2.2.1.11}stopPinInterrupt()}{6}{subsubsection.2.2.1.11}%
+\contentsline {subsubsection}{\numberline {2.2.1.12}toggleEyes()}{6}{subsubsection.2.2.1.12}%
+\contentsline {subsection}{\numberline {2.2.2}Variable Documentation}{6}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}currentColor}{6}{subsubsection.2.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}eyesOn}{7}{subsubsection.2.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.3}myDFPlayer}{7}{subsubsection.2.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.2.4}nextSong}{7}{subsubsection.2.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.2.5}OFF}{7}{subsubsection.2.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.2.6}RED}{7}{subsubsection.2.2.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.2.7}WHITE}{7}{subsubsection.2.2.2.7}%
+\contentsline {chapter}{Index}{9}{section*.3}%
