@@ -5,14 +5,14 @@ convention adopted by the DFMini Player library for the Arduino Uno
 
 import os
 
-directory = 'test/'
+directory = 'mp3/'
 
 def main():
-    counter = 0
+    counter = 1
     for filename in os.listdir(directory):
-        newname = directory + f"000{counter}.mp3"
+        newname = directory + f"000{counter}_" + filename[:-4] + ".mp3"
         realfilename = directory + filename
-        os.rename(realfilename, realfilename + newname)
+        os.rename(realfilename, newname)
         counter = counter + 1
 
 if __name__ == '__main__':
