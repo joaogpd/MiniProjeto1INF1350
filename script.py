@@ -12,7 +12,7 @@ def main():
     for filename in os.listdir(directory):
         newname = directory + f"000{counter}.mp3"
         realfilename = directory + filename
-        os.rename(realfilename, newname)
+        os.rename(realfilename, realfilename + newname)
         counter = counter + 1
 
 if __name__ == '__main__':
